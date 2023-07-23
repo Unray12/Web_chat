@@ -2,15 +2,66 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color:aliceblue;
+}
+html {
+    color: #333;
+    font-size: 62.5%;
+    font-family: "Open Sans", sans-serif;
+}
+/* homepage */
+
+.homeMain {
+    /* background-color: antiquewhite; */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
 }
 
-/* homepage */
-.buttons {
+.homeHeading {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.formGroup {
     display: flex;
+    margin-bottom: 16px;
+    flex-direction: column;
+}
+
+.formLabel {
+    text-align: left;
+    font-weight: 700;
+    padding-bottom: 6px;
+    line-height: 1.8rem;
+    font-size: 1.4rem;
+}
+
+.homeBox {
+    height: 40px;
+    padding: 4px 12px;
+    border: 1px solid;
+    border-radius: 3px;
+    outline: none;
+    font-size: 1.4rem;
+    color: black;
+}
+
+.buttons {
+    /* display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 10px; */
+    width: 360px;
+    min-height: 100px;
+    padding: 32px 24px;
+    text-align: center;
+    background: #fff;
+    border-radius: 2px;
+    margin: 24px;
+    align-self: center;
+    box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
 }
 
 .join {
@@ -19,10 +70,49 @@
     width: 100%;
 }
 
+#joinButton,
 .createButton {
-    width: 100%;
+    font-size: medium;
+    font-weight: 600;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+
 }
 
+#joinButton:hover,
+.createButton:hover {
+    background-color:blanchedalmond;
+}
+
+#joinButton {
+    width: 30%;
+    background-color: #62BD8F;
+}
+.createButton {
+    width: 100%;
+    margin-top: 16px;
+    padding: 8px;
+    background-color:cadetblue;
+}
+
+.or {
+    font-size: large;
+    font-weight: bold;
+}
+
+.spacer {
+    margin-top: 36px;
+  }
+
+#name {
+    width: 90%;
+}
+
+#roomCode {
+    width: 57%;
+    margin-right: 3%;
+}
 /* room page */
 .messageBox {
     border-color: black;
@@ -56,6 +146,7 @@
     flex: 1;
 }
 
+/* room js */
 .text {
     display: flex;
     flex-direction: row;
@@ -65,7 +156,7 @@
     padding-right: 10px;
 }
   
-  .muted {
+.muted {
     font-size: 10px;
     color: darkgray;
   }

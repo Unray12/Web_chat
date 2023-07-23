@@ -1,32 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
-<form method = "post" class="buttons">
-     <h3>ENTER THE CHAT ROOM</h3>
-     <div class="inputName">
-          <label>Name: </label>
-          <input 
-               type="text" 
-               placeholder="Enter a name!" 
-               name="name" 
-               value="{{name}}"">
-     </div>
-     <div class="join">
-          <input 
-               type="text" 
-               placeholder="Enter room code" 
-               name="code" 
-               value="{{code}}"
-          >
-          <button 
-               type="submit" 
-               name="join">Join a room
-          </button>
-     </div>
-     <button type="submit" name="create" class="createButton">Create a room</button>
-     {% if error %}
-     <ul>
-          <li>{{error}}</li>
-     </ul>
-     {% endif %}
-</form>
+<div class="homeMain">
+     <form method = "post" class="buttons">
+          <h3 class="homeHeading">ENTER THE CHAT ROOM</h3>
+
+          <div class="spacer"></div>
+
+          <div class="inputName formGroup">
+               <label class="name formLabel" for="name">Name</label>
+               <input 
+                    type="text" 
+                    placeholder="Enter a name!" 
+                    name="name"
+                    value="{{name}}"
+                    class="homeBox"
+                    id="name"
+               >
+               <span formNoti></span>
+          </div>
+
+          <div class="inputCode formGroup">
+               <label for="roomCode" class="formLabel">Room code</label>
+               
+               <div class="join">
+                    <input 
+                         type="text" 
+                         placeholder="Enter room code" 
+                         name="code" 
+                         value="{{code}}"
+                         class="homeBox"
+                         id="roomCode"
+                    >
+                    <button 
+                         type="submit" 
+                         name="join"
+                         id="joinButton">Join a room
+                    </button>
+               </div>
+               <span formNoti></span>
+          </div>
+
+          <div class="or">OR</div>
+
+          <button type="submit" name="create" class="createButton">Create a room</button>
+          {% if error %}
+          <ul>
+               <li>{{error}}</li>
+          </ul>
+          {% endif %}
+     </form>
+</div>
 {% endblock %}

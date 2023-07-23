@@ -24,6 +24,7 @@
     var socketio = io();
 
     const messages = document.getElementById("messages");
+    const message = document.getElementById("message");
 
     const createMessage = (name, msg) => {
         const content = `
@@ -42,11 +43,20 @@
     socketio.on("message", (data) => {
         createMessage(data.name, data.message);
     });
+
     const sendMessage = () => {
-        const message = document.getElementById("message");
         if (message.value == "") return;
         socketio.emit("message", {data: message.value});
         message.value = "";
+    };
+
+    //press enter to send message
+    message.onkeydown = function(e) {
+        switch (e.which) {
+            case 13:
+                sendMessage();
+                break;
+        }
     };
 </script>
 {% for msg in messages %}
