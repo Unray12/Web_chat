@@ -47,6 +47,10 @@ html {
     color: black;
 }
 
+.homeBox:hover {
+    border-color: #1dbfaf;
+  }
+
 .buttons {
     /* display: flex;
     flex-direction: column;
