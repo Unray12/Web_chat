@@ -34,6 +34,8 @@ socketio = SocketIO(app)
 
 roomList = {}
 
+globalID = 0
+
 def generateUniqueCode(length):
     while True:
         code = ""
@@ -42,6 +44,11 @@ def generateUniqueCode(length):
         if code not in roomList:
             break
     return code
+
+def generateUserIDinRoom():
+    global globalID
+    globalID = globalID + 1;
+    return globalID + 1;
 
 
 @app.route("/", methods=["POST", "GET"])
@@ -64,24 +71,27 @@ def home():
         #create room
         if create != False:
             room = generateUniqueCode(4)
-            roomList[room] = {"members": 0, "messages": []}
+            roomList[room] = {"members": 0, "messages": [], "users": []}
         elif code not in roomList:
             return render_template("home.html", error = "Room does not exist!", code = code, name = name)
     
         #session save data of user even they refresh page
         session["room"] = room
         session["name"] = name
-        return redirect(url_for("room"))
+        session["ID"] = generateUserIDinRoom()
+        return redirect(url_for("room", ID=session.get("ID")))
     return render_template("home.html")
 
 @app.route("/room")
 def room():
     room = session.get("room")
+    name = session.get("name")
+    ID = session.get("ID")
     if room is None or session.get("name") is None or room not in roomList:
-        return redirect(url_for("home"))
+        return redirect(url_for("home", name=name))
         #If block: is not go to homepage to enter room code and name cannot go to room page
 
-    return render_template("room.html", code = room, messages=roomList[room]["messages"])
+    return render_template("room.html", code = room, messages=roomList[room]["messages"], name=name, ID=ID)
 
 @socketio.on("message")
 def message(data):
@@ -90,6 +100,7 @@ def message(data):
         return
     
     content = {
+        "ID": session.get("ID"),
         "name": session.get("name"),
         "message": data["data"]
     }
@@ -101,6 +112,7 @@ def message(data):
 def connect(auth):
     room = session.get("room")
     name = session.get("name")
+    ID = session.get("ID")
 
     if not room or not name:
         return
@@ -110,7 +122,7 @@ def connect(auth):
     
     #join a room
     join_room(room)
-    send({"name": name, "message": "has joined the room."}, to=room)
+    send({"name": name, "message": "has joined the room.", "ID": ID, "textIndentiferCode": "!!!"}, to=room)
     roomList[room]["members"] += 1
     print(f"{name} joined room {room}.")
 

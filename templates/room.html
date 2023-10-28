@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="roomHeader">
-    <h2 class="roomCode">Chat room: {{code}}</h2>
+    <h2 class="roomCode {{code}} {{ID}}">Chat room: {{code}}</h2>
 </div>
 <div class="messageBox">
     <div class="messages" id="messages"></div>
@@ -23,49 +23,97 @@
     </div>
 </div>
 <script type="text/javascript">
+    class user {
+        constructor (name, ID) {
+            this.name = name;
+            this.ID = ID;
+        }
+    }
+
+    const thisUser = new user("{{ name }}", "{{ ID }}");
     var socketio = io();
     var orderMessage = 0;
+    var orderNotifyText = 0;
     const messages = document.getElementById("messages");
     const message = document.getElementById("message");
 
     
     function getSizeOfInbox(stringMsg) {
         var textBox = document.querySelectorAll(".textBox");
+        var text = document.querySelectorAll(".text");
         
-        var maxWWidthInbox = 500;
+        var maxWidthInbox = 500;
 
-        var length = stringMsg.length * 12;
-        textBoxCurrent = textBox[orderMessage - 1];
+        var textCurrent = text[orderMessage];
+        var textBoxCurrent = textBox[orderMessage];
 
-        if (length > maxWWidthInbox) {
+        var length = textCurrent.offsetWidth + 1;
+        if (length > maxWidthInbox) {
             var numRow = Math.ceil(length / 500);
             textBoxCurrent.style.width = '500' + "px";
+            textBoxCurrent.style.heigth = numRow * 30 + "px";
+            textCurrent.style.width = '500' + "px";
         }
         else
             textBoxCurrent.style.width = length + "px";
+            textBoxCurrent.style.heigth = "30" + "px";
     }
     // <strong>${name}</strong>: ${msg}
-    const createMessage = (name, msg) => {
+    const createMessage = (sender, msg) => {
+        var thisID = "{{ ID }}";
         const content = `
-    <div class="text">
-        <span class = "textBox ${orderMessage}">
-            <p>
-                ${msg}
-            </p>
-        </span>
-        <span class="muted">
-            ${new Date().toLocaleString()}
-        </span>
-    </div>
-    `;
+            <div class="messageDisplay">
+                <span class = "textBox ${orderMessage} ${sender.name}">
+                    <p class="text ${orderMessage}">
+                        ${msg}
+                    </p>
+                </span>
+                <span class="muted">
+                    <!--${new Date().toLocaleString()}*/ -->
+                </span>
+            </div>
+            `;
         messages.innerHTML += content;
+        getSizeOfInbox(msg);
+        var newMessageDisplay = document.querySelectorAll(".messageDisplay")[orderMessage];
+        var newTextBox = document.querySelectorAll(".textBox")[orderMessage];
+        if (sender.ID != thisID) { 
+            newMessageDisplay.style.justifyContent = "flex-start";
+            newTextBox.style.backgroundColor = "rgba(255, 255, 255, 0.839)";
+            newTextBox.style.color = "black";
+        }
+        else {
+            newMessageDisplay.style.justifyContent = "flex-end";
+            newTextBox.style.backgroundColor = "rgb(47, 97, 222)";
+            newTextBox.style.color = "white";
+        }
         orderMessage++;
     };
 
+    const createMessageNotify = (name, msg) => {
+        var thisID = "{{ ID }}";
+        const content = `
+            <div class="notifyText">
+                <span class="muted">
+                    ${name} ${msg}
+                </span>
+            </div>
+            `;
+        messages.innerHTML += content;
+        orderNotifyText++;
+    }
+
+    const classifyText = (data) => {
+        if (data.textIndentiferCode == "!!!")
+            createMessageNotify(data.name, data.message);
+        else
+            createMessage(new user(data.name, data.ID), data.message);
+    }
+
     socketio.on("message", (data) => {
-        createMessage(data.name, data.message);
-        getSizeOfInbox(data.message);
+        classifyText(data);
     });
+
 
     const sendMessage = () => {
         if (message.value == "") return;
@@ -85,7 +133,7 @@
 </script>
 {% for msg in messages %}
 <script type="text/javascript">
-  createMessage("{{msg.name}}", "{{msg.message}}");
+  createMessage(new user("{{msg.name}}", "{{msg.ID}}"), "{{msg.message}}");
 </script>
 {% endfor %} 
 {% endblock %}
