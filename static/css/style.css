@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     background-color:aliceblue;
+    height: 100vh;
 }
 html {
     color: #333;
@@ -41,7 +42,8 @@ html {
     height: 40px;
     padding: 4px 12px;
     border: 1px solid;
-    border-radius: 3px;
+    border-width: 2px;
+    border-radius: 8px;
     outline: none;
     font-size: 1.4rem;
     color: black;
@@ -118,16 +120,34 @@ html {
     margin-right: 3%;
 }
 /* room page */
+.roomHeader {
+    background-color:rgb(36, 35, 36);
+    position: absolute;
+    height: 10%;
+    width: 30%;
+    top: 20px;
+    border: none;
+    border-radius: 15px;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.roomCode {
+    color: #cfddce;
+    font-weight: bold;
+}
 .messageBox {
-    border-color: black;
-    border-width: 3px;
-    border-style: solid;
-    border-radius: 10px;
-    background-color: whitesmoke;
+    margin-top: 5%;
+    border: 0px solid;
+    background-color:#cfddce;
+    box-shadow: 0 2px 5px 0px rgba(51, 62, 73, 0.1);
     height: 80vh;
     display: flex;
     flex-direction: column;
-    width: 80vw;
+    width: 40vw;
     align-items: stretch;
 }
 
@@ -144,12 +164,44 @@ html {
 
 .roomCode {
     text-align: center;
+    font-size: 30px;
 }
 
-#message {
+.inputChat > #message{
+    display: flex;
+    justify-content: center;
+    margin-right: 1%;
+    outline: none;
     flex: 1;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 20px;
+    color: black;
+    border-width: 1px;
 }
 
+.inputChat > #message:focus {
+    border-color:#1dbfaf;
+    border-width: 2px;
+}
+
+.inputChat > #sendButton {
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    background-color: rgb(135, 221, 225);
+}
+
+.inputChat > #sendButton:hover{
+    background-color:rgb(120, 197, 235);
+}
+
+.inputChat > #sendButton::before {
+    content: "Send";
+    font-weight: bold;
+    font-size: 20px;
+    /* vertical-align: middle; */
+}
 /* room js */
 .text {
     display: flex;
@@ -158,9 +210,25 @@ html {
     justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
+    font-size: 20px;
 }
-  
+/* w: 20 h: 30 */
+.text > .textBox {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(90, 119, 234);
+    color: white;
+    height: 30px;
+    /* width: 500px; */
+    padding: 5px 5px;
+    margin-top: 5px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
 .muted {
     font-size: 10px;
     color: darkgray;
+    font-size: 15px;
   }

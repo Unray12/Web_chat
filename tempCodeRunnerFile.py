@@ -2,30 +2,29 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import join_room, leave_room, send, SocketIO
 import random
 from string import ascii_uppercase
-
-# import firebase_admin
-# from firebase_admin import credentials
+import firebase_admin
+from firebase_admin import credentials
 # import pyrebase
 
 
-# firebaseConfig = {
-#     "apiKey": "AIzaSyC9kicACl131HwFP4UXqhnvYBjCPB94PSo",
-#     "authDomain": "web-chat-49360.firebaseapp.com",
-#     "databaseURL": "https://web-chat-49360-default-rtdb.asia-southeast1.firebasedatabase.app",
-#     "projectId": "web-chat-49360",
-#     "databaseUR:": "https://console.firebase.google.com/u/0/project/web-chat-49360/database/web-chat-49360-default-rtdb/data/~2F",
-#     "storageBucket": "web-chat-49360.appspot.com",
-#     "messagingSenderId": "508260518232",
-#     "appId": "1:508260518232:web:f5f9ea6ce0b737886cbd2d",
-#     "measurementId": "G-4R1J4KH1GK"
-# }
+firebaseConfig = {
+    "apiKey": "AIzaSyC9kicACl131HwFP4UXqhnvYBjCPB94PSo",
+    "authDomain": "web-chat-49360.firebaseapp.com",
+    "databaseURL": "https://web-chat-49360-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "projectId": "web-chat-49360",
+    "databaseUR:": "https://console.firebase.google.com/u/0/project/web-chat-49360/database/web-chat-49360-default-rtdb/data/~2F",
+    "storageBucket": "web-chat-49360.appspot.com",
+    "messagingSenderId": "508260518232",
+    "appId": "1:508260518232:web:f5f9ea6ce0b737886cbd2d",
+    "measurementId": "G-4R1J4KH1GK"
+}
 
-# cred = credentials.Certificate("web-chat-49360-firebase-adminsdk-8wyxa-ca8e71b86a.json")
-# firebase_admin.initialize_app(cred)
-# db = firebase.database()
+cred = credentials.Certificate("web-chat-49360-firebase-adminsdk-8wyxa-ca8e71b86a.json")
+firebase_admin.initialize_app(cred)
+db = firebase.database()
 
-# #  Initialize Firebase
-# firebase.initializeApp(firebaseConfig)
+#  Initialize Firebase
+firebase.initializeApp(firebaseConfig)
 
 
 app = Flask(__name__)
